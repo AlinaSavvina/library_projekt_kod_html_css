@@ -17,4 +17,6 @@ public interface AuthorService {
 
     AuthorDto getByNameN2(String name);
     List<BookDto> getBooksByAuthor(Author author);
+
+    List<AuthorDto> getAllAuthor();
 }

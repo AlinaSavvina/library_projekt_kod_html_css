@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 import ru.itgirl.libraryproject.dto.AuthorDto;
 import ru.itgirl.libraryproject.dto.BookDto;
 import ru.itgirl.libraryproject.model.Author;
+import ru.itgirl.libraryproject.model.Book;
 import ru.itgirl.libraryproject.repository.AuthorRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +60,12 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<BookDto> getBooksByAuthor(Author author) {
         return getBooksByAuthor(author);
+    }
+
+    @Override
+    public List<AuthorDto> getAllAuthor() {
+        List<Author> authors = authorRepository.findAll();
+        return authors.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
     private AuthorDto convertEntityToDto(Author author) {

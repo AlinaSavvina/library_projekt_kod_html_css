@@ -12,9 +12,11 @@ import ru.itgirl.libraryproject.model.Author;
 import ru.itgirl.libraryproject.model.Book;
 import ru.itgirl.libraryproject.repository.BookRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-    @Service
+@Service
     @RequiredArgsConstructor
     public class BookServiceImpl implements BookService {
 
@@ -49,7 +51,14 @@ import java.util.Optional;
         return Optional.empty();
     }
 
-    private BookDto convertEntityToDto(Book book) {
+        @Override
+        public List<BookDto> getAllBooks() {
+                List<Book> books = bookRepository.findAll();
+                return books.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+
+        }
+
+        private BookDto convertEntityToDto(Book book) {
             return BookDto.builder()
                     .id(book.getId())
                     .genre(book.getGenre().getName())
